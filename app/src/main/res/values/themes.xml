@@ -3,7 +3,17 @@
     <style name="Base.Theme.JingxuansAndroidLabs" parent="Theme.Material3.DayNight">
         <!-- DayNight.NoActionBar  if don't want action bar-->
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+        <!--primary brand color-->
+        <item name="colorPrimary">@color/my_primary</item>
+
+        <!--secondary brand color-->
+        <item name="colorSecondary">@color/my_secondary</item>
+
+        <!--status bar color-->
+        <item name="android:statusBarColor">@color/my_statusbar</item>
+        <!--text color-->
+        <item name="android:textColor">#146C94</item>
     </style>
 
     <style name="Theme.JingxuansAndroidLabs" parent="Base.Theme.JingxuansAndroidLabs" />
