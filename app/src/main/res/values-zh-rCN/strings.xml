@@ -3,4 +3,5 @@
     <string name="app_name">Jingxuan\'s Android Labs</string>
     <string name="welcome_text">你好世界</string>
     <string name="button_message">我是一个按钮</string>
+    <string name="editmessage">编辑文字</string>
 </resources>
