@@ -5,9 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
-
-
-
     @Override //this is the starting point
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState); // do what the parent does
