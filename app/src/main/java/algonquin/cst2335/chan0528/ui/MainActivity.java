@@ -84,33 +84,17 @@ public class MainActivity extends AppCompatActivity {
             model.editedCheckBox.postValue(isChecked);
         });
         mySwitch.setOnCheckedChangeListener( (s, isChecked) -> {
-            model.editedSwitch.postValue(isChecked);
+            model.editedCheckBox.postValue(isChecked);
         });
 
         myRadioButton.setOnCheckedChangeListener( (radio, isChecked) -> {
-            model.editedRadioButton.postValue(isChecked);
+            model.editedCheckBox.postValue(isChecked);
         });
         //observer
         model.editedCheckBox.observe(this, selected -> {
             myCheckBox.setChecked(selected);
-
-            // set Toast message
-            CharSequence text = "The value is now: " + selected;
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(this, text, duration);
-            toast.show();
-        });
-        model.editedRadioButton.observe(this, selected -> {
-            myRadioButton.setChecked(selected);
-
-            // set Toast message
-            CharSequence text = "The value is now: " + selected;
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(this, text, duration);
-            toast.show();
-        });
-        model.editedSwitch.observe(this, selected -> {
             mySwitch.setChecked(selected);
+            myRadioButton.setChecked(selected);
 
             // set Toast message
             CharSequence text = "The value is now: " + selected;
@@ -131,13 +115,6 @@ public class MainActivity extends AppCompatActivity {
             Toast toast = Toast.makeText(this, text, duration);
             toast.show();
         });
-
-
-
-
-
-
-
 
     }
 }
