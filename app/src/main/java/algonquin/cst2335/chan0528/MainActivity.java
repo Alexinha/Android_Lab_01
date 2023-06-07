@@ -2,7 +2,9 @@ package algonquin.cst2335.chan0528;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,12 +31,24 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // create a SharedPreferences object
+        SharedPreferences prefs = getSharedPreferences("MyData", Context.MODE_PRIVATE);
+        // show the last email address typed and saved
+        String emailAddress = prefs.getString("EmailAddress", "");
+        binding.editEmail.setText(emailAddress);
+
         binding.loginButton.setOnClickListener(click -> {
             // transfer from MainActivity to SecondActivity
             Intent nextPage = new Intent(MainActivity.this, SecondActivity.class);
             // putExtra() function sends variables to the next Activity (page)
             // here the variable is a string called "EmailAddress" and the value is the second parameter
             nextPage.putExtra("EmailAddress", binding.editEmail.getText().toString());
+
+            // use SharedPreferences Editor object to save the data just been typed in
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("EmailAddress", binding.editEmail.getText().toString());
+            editor.apply();
+
             startActivity(nextPage); // make the transition
 
         });
