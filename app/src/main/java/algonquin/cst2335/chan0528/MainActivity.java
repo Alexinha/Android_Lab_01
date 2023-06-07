@@ -3,6 +3,7 @@ package algonquin.cst2335.chan0528;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -14,8 +15,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static String TAG = "MainActivity";
     protected ActivityMainBinding binding;
-    Button loginButton = binding.loginButton;
-    EditText editEmail = binding.editEmail;
 
     @Override //this is the starting point
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +32,9 @@ public class MainActivity extends AppCompatActivity {
         binding.loginButton.setOnClickListener(click -> {
             // transfer from MainActivity to SecondActivity
             Intent nextPage = new Intent(MainActivity.this, SecondActivity.class);
-            nextPage.putExtra("EmailAddress", editEmail.getText().toString());
+            // putExtra() function sends variables to the next Activity (page)
+            // here the variable is a string called "EmailAddress" and the value is the second parameter
+            nextPage.putExtra("EmailAddress", binding.editEmail.getText().toString());
             startActivity(nextPage); // make the transition
 
         });
