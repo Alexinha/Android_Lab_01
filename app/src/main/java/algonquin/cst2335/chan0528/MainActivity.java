@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             if(checkPasswordComplexity(psw)){
                 textView.setText("Your password meets the requirements.");
             }else{
-                textView.setText("You shall not pass!abc123A&");
+                textView.setText("You shall not pass!");
             }
 
         });
