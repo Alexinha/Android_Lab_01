@@ -1,4 +1,4 @@
-package algonquin.cst2335.chan0528;
+package algonquin.cst2335.chan0528.ui;
 
 import static java.lang.Character.isDigit;
 import static java.lang.Character.isLowerCase;
@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import algonquin.cst2335.chan0528.R;
 
 /**
  * MainActivity is the main activity class for the application.
