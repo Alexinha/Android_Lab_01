@@ -11,4 +11,7 @@ public class ChatRoomViewModel extends ViewModel {
 
     // make the arrayList which holds the messages data to survive the rotate
     public MutableLiveData<ArrayList<ChatMessage>> messages = new MutableLiveData<>();
+
+    // to display a selected message's details in fragment
+    public MutableLiveData<ChatMessage> selectedMessage = new MutableLiveData<>();
 }
