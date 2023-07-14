@@ -13,7 +13,7 @@ public class ChatMessage {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name="id")
-    public int id;
+    public long id;
 
     @ColumnInfo(name="message")
     String message;
@@ -31,6 +31,8 @@ public class ChatMessage {
         this.timeSent = t;
     }
 
+    // for database queries
+    public ChatMessage(){}
     // getters
     public String getMessage(){
         return this.message;
