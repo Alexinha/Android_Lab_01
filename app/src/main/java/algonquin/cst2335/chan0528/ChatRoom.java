@@ -199,6 +199,16 @@ public class ChatRoom extends AppCompatActivity {
             String timeStamp = sdf.format(new Date());
             // set the boolean value
             boolean isSentButton = false;
+
+            ChatMessage newMsg =  new ChatMessage(newMessage, timeStamp, isSentButton);
+
+            Executor thread1 = Executors.newSingleThreadExecutor();
+            thread1.execute( () -> {
+                newMsg.id = mDAO.insertMessage(newMsg);
+            });
+
+            messages.add(newMsg);
+
             messages.add(new ChatMessage(newMessage, timeStamp, isSentButton));
 
             // tell the adapter which row has to be redrawn
