@@ -1,13 +1,27 @@
 package algonquin.cst2335.chan0528;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 /**
  * THis class stores the data required for each message sent (message,
  * time sent, and which button was clicked).
  */
+@Entity
 public class ChatMessage {
 
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name="id")
+    public int id;
+
+    @ColumnInfo(name="message")
     String message;
+
+    @ColumnInfo(name="TimeSent")
     String timeSent;
+
+    @ColumnInfo(name="SendOrReceive")
     boolean isSentButton;
 
     // constructor
