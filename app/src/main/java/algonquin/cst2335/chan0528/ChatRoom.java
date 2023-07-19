@@ -10,13 +10,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+//import android.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
+
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -55,6 +60,10 @@ public class ChatRoom extends AppCompatActivity {
         // binding
         binding = ActivityChatRoomBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // tool bar
+        Toolbar toolbar = binding.myToolBar;
+        setSupportActionBar(toolbar);
 
         FrameLayout fragmentLocation = findViewById(R.id.fragmentLocation);
 
@@ -224,6 +233,13 @@ public class ChatRoom extends AppCompatActivity {
 
 
     } // onCreate
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.myMenu, menu);
+        return true;
+    }
 
     // inner class inside the ChatRoom which will be an object for representing
     // everything that goes on a row in the list
