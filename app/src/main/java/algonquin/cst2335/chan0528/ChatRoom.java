@@ -15,10 +15,12 @@ import android.app.AlertDialog;
 import android.app.Notification;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 //import android.widget.Toolbar;
 import androidx.appcompat.widget.Toolbar;
 
@@ -237,7 +239,32 @@ public class ChatRoom extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.myMenu, menu);
+        getMenuInflater().inflate(R.menu.my_menu, menu);
+        return true;
+    }
+
+    /**
+     * this is the function that is triggered when click on a menu item
+     * @param item The menu item that was selected.
+     *
+     * @return a boolean value
+     */
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        String message = "";
+        if(item.getItemId() == R.id.item_1){
+            message = "";
+        int position;
+//            mDAO.deleteMessage();
+        }
+
+        Toast.makeText(this, "You clicked on " + message, Toast.LENGTH_LONG).show();
+
+                // chat message deletion code here
+                // when the item is clicked, an alert pops up asking if the user wants to
+                // delete this message
+
         return true;
     }
 
@@ -248,6 +275,7 @@ public class ChatRoom extends AppCompatActivity {
         TextView timeText;
         public MyRowHolder(@NonNull View itemView){
             super(itemView);
+
 
 //             when click on a row, we'd like to load an alert window asking if you want to delete tis row
 //            itemView.setOnClickListener( click -> {
@@ -305,6 +333,7 @@ public class ChatRoom extends AppCompatActivity {
 
             messageText = itemView.findViewById(R.id.message);
             timeText = itemView.findViewById(R.id.time);
-        }
-    }
+
+        } // MyRowHolder constructor
+    } // MyRowHolder class
 }// chat room
