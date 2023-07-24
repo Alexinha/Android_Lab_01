@@ -1,6 +1,7 @@
 package algonquin.cst2335.chan0528;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -11,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import android.app.ActionBar;
-import android.app.AlertDialog;
 import android.app.Notification;
 import android.os.Bundle;
 import android.view.Menu;
@@ -251,19 +251,48 @@ public class ChatRoom extends AppCompatActivity {
      */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        super.onOptionsItemSelected(item);
+        AlertDialog.Builder builder = new AlertDialog.Builder(ChatRoom.this);
 
-        String message = "";
+        // chat message deletion code here
+        // when the item is clicked, an alert pops up asking if the user wants to
+        // delete this message
         if(item.getItemId() == R.id.item_1){
-            message = "";
-        int position;
-//            mDAO.deleteMessage();
+            ChatMessage msgOpened = chatModel.selectedMessage.getValue();
+
+            int position = messages.indexOf(msgOpened);
+
+            if(msgOpened != null){
+
+                builder.setMessage("Delete this message: " + msgOpened.message);
+                builder.setTitle("Question: ");
+
+                builder.setPositiveButton("Yes", ((dialog, clk) -> {
+                    ChatMessage deletedMsg = msgOpened;
+
+                    Executor thread2 = Executors.newSingleThreadExecutor();
+                    thread2.execute(() -> {
+                        mDAO.deleteMessage(deletedMsg);
+                    });
+
+                    messages.remove(position);
+                    myAdapter.notifyItemRemoved(position);
+                })); // set positive button
+
+                builder.setNegativeButton("No", ((dialog, clk) -> {
+                    // don't do anything
+                }));
+
+                builder.create().show();
+            }else{
+                Toast.makeText(this, "You need to select a message first", Toast.LENGTH_LONG).show();
+            }
+
+        } else if (item.getItemId() == R.id.item_2){
+
+            Toast.makeText(this, "Version 1.0, created by Jingxuan Chang", Toast.LENGTH_LONG).show();
+
         }
-
-        Toast.makeText(this, "You clicked on " + message, Toast.LENGTH_LONG).show();
-
-                // chat message deletion code here
-                // when the item is clicked, an alert pops up asking if the user wants to
-                // delete this message
 
         return true;
     }
