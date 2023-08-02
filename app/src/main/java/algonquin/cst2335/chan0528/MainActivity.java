@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -27,8 +28,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
@@ -41,23 +44,12 @@ import algonquin.cst2335.chan0528.databinding.ActivityMainBinding;
  * @version 1.0
  */
 public class MainActivity extends AppCompatActivity {
-
-    /**
-     * This holds the text at the center of the screen
-     */
-
     protected String cityName;
     protected RequestQueue queue = null;
 
     @Override //this is the starting point
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState); // do what the parent does
-
-        // R is the res folder under app/src/main
-        // layout is the layout folder under res
-        // activity_main is an integer (according to the documentation)
-
-
+        super.onCreate(savedInstanceState);
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -92,27 +84,29 @@ public class MainActivity extends AppCompatActivity {
                             JSONObject pos0 = weatherArray.getJSONObject(0);
                             String description = pos0.getString("description");
                             String iconName = pos0.getString("icon");
-                            String pictureURL = "https://openweathermap.org/img/w/" + iconName +".png";
+                            String pictureURL = "http://openweathermap.org/img/w/" + iconName +".png";
 
                             // download the URL and store it as a bitmap
-                            ImageRequest imgReq = new ImageRequest(pictureURL, new Response.Listener<Bitmap>() {
-                                @Override
-                                public void onResponse(Bitmap bitmap) {int i = 0;}
+                            ImageRequest imgReq = new ImageRequest(pictureURL, bitmap -> {
+//                                @Override
+//                                public void onResponse(Bitmap bitmap) {int i = 0;}
+                                FileOutputStream fOut = null;
+                                try{
+                                    fOut = openFileOutput(iconName + ".png", Context.MODE_PRIVATE);
+                                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+                                    fOut.flush();
+                                    fOut.close();
+                                }catch(FileNotFoundException e){
+                                    e.printStackTrace();
+                                }catch(IOException e){
+                                    throw new RuntimeException(e);
+                                }
+
                             }, 1024, 1024, ImageView.ScaleType.CENTER, null,
                                     (error) -> {
-                                    int i = 0;
+//                                    int i = 0;
                             }); // imagerequest
                             queue.add(imgReq);
-
-//                            FileOutputStream fOut = null;
-//                            try{
-//                                fOut = openFileOutput(iconName + ".png", Context.MODE_PRIVATE);
-//                                image.compress(Bitmap.CompressFormat.PNG, 100, fOut);
-//                                fOut.flush();
-//                                fOut.close();
-//                            }catch(FileNotFoundException e){
-//                                e.printStackTrace();
-//                            }
 
                             runOnUiThread(() -> {
 
@@ -127,8 +121,28 @@ public class MainActivity extends AppCompatActivity {
                                 binding.description.setText(description);
                                 binding.description.setVisibility(View.VISIBLE);
 
-
                             });
+
+                            String pathname = getFilesDir() + "/" + iconName + ".png";
+                            File file = new File(pathname);
+                            if(file.exists()){
+                                Bitmap theImage = BitmapFactory.decodeFile(pathname);
+                                binding.icon.setImageBitmap(theImage);
+                                binding.icon.setVisibility(View.VISIBLE);
+                            }else{
+                                ImageRequest imageRequest2 = new ImageRequest(pictureURL, bitmap -> {
+                                   try{
+                                       binding.icon.setImageBitmap(bitmap);
+                                       binding.icon.setVisibility(View.VISIBLE);
+
+                                   }catch(Exception e){
+
+                                   }
+                                }, 1024, 1024, ImageView.ScaleType.CENTER, null,
+                                        (error) -> {}
+                                );
+                                queue.add(imageRequest2);
+                            }
 
                         }catch(JSONException e){
 
@@ -137,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     },
                     (error)->{
-                        int i = 0;
+//                        int i = 0;
                     });
             queue.add(request);
         }); // click listener
